@@ -42,7 +42,11 @@ sap.ui.define([
 			});
 		},
 		
-		init: function() {
+		init: function(pingTimeoutMS) {
+			if( pingTimeoutMS ) {
+				this.pingPongTimeout = pingTimeoutMS;
+			}
+			
 			this.checkPingPong = true;
 			if( this.pingPongTimer ) {
 				return;
