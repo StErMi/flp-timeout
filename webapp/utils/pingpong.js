@@ -5,13 +5,22 @@ sap.ui.define([
 	
 	return {
 		
+		/* Timer reference */
 		pingPongTimer: null,
+		
+		/* How many MS should I do the timeout check request? */
 		pingPongTimeout: 30000, // 30 seconds
 
 		///////////////////////////////////////////////////////////////////
 		//  PINGPONG
 		///////////////////////////////////////////////////////////////////
 		
+		/**
+		 * Setup ping mechanism on the odata model
+		 *
+		 * @param {Object} oDataModel
+		 * @public
+		 */
 		setUpPingPongForOData: function(oDataModel) {
 			var that = this;
 			oDataModel.attachRequestFailed(function(error){
@@ -27,6 +36,11 @@ sap.ui.define([
 		    });
 		},
 		
+		/**
+		 * Setup ping mechanism on Ajax requests
+		 *
+		 * @public
+		 */
 		setUpPingPongForAjax: function() {
 			var that = this;
 			$( document ).ajaxError(function(event, jqxhr, settings, thrownError) {
@@ -42,9 +56,15 @@ sap.ui.define([
 			});
 		},
 		
-		init: function(pingTimeoutMS) {
-			if( pingTimeoutMS ) {
-				this.pingPongTimeout = pingTimeoutMS;
+		/**
+		 * Init the pingpong session check
+		 *
+		 * @param {int} iPingTimeoutMS, how many times do you want to check if the session is expired?
+		 * @public
+		 */
+		init: function(iPingTimeoutMS) {
+			if( iPingTimeoutMS ) {
+				this.pingPongTimeout = iPingTimeoutMS;
 			}
 			
 			this.checkPingPong = true;
@@ -66,11 +86,21 @@ sap.ui.define([
 			}, this.pingPongTimeout);
 		},
 		
+		/**
+		 * Stop the pingpong session
+		 *
+		 * @public
+		 */
 		clear: function() {
 			this.checkPingPong = false;
             clearInterval(this.pingPongTimer);
 		},
 		
+		/**
+		 * Show the session expired timeout. User will be forced to reload the page
+		 *
+		 * @public
+		 */
 		showPingPongDialog: function() {
 			if( !this.checkPingPong ) {
 				return;
