@@ -1,0 +1,23 @@
+<mvc:View controllerName="it.designfuture.timeoutsample.PingPong.controller.Home" xmlns:html="http://www.w3.org/1999/xhtml"
+	xmlns:mvc="sap.ui.core.mvc" displayBlock="true" xmlns="sap.m">
+	<App id="idAppControl">
+		<pages>
+			<Page title="Product List">
+				<content>
+					<PullToRefresh id="pullToRefresh" visible="{device>/isTouch}" refresh="handleRefresh"/>
+					<List id="productList" mode="{device>listMode}" items="{oDataModel>/Products}" rememberSelections="true"
+						growing="true" growingThreshold="10" growingScrollToLoad="true">
+						<ObjectListItem title="{oDataModel>ProductName}" type="Navigation" press="onListItemPress">
+							<firstStatus>
+								<ObjectStatus state="Success" title="Discontinued" text="{oDataModel>Discontinued}"/>
+							</firstStatus>
+							<attributes>
+								<ObjectAttribute text="{oDataModel>QuantityPerUnit}"/>
+							</attributes>
+						</ObjectListItem>
+					</List>
+				</content>
+			</Page>
+		</pages>
+	</App>
+</mvc:View>
