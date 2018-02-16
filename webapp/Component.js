@@ -31,7 +31,7 @@ sap.ui.define([
 			// set the device model
 			this.setModel(models.createDeviceModel(), "device");
 			
-			pingpong.init(60000); // Ping every 60 seconds
+			pingpong.init("URL/TO/PING.xsjs", 60000); // Ping every 60 seconds
 			pingpong.setUpPingPongForAjax();
 			pingpong.setUpPingPongForOData(this.getModel("oDataModel"));
 		},

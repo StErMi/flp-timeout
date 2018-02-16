@@ -10,6 +10,9 @@ sap.ui.define([
 		
 		/* How many MS should I do the timeout check request? */
 		pingPongTimeout: 30000, // 30 seconds
+		
+		/* Setup which url should be pinged to check if the session is still alive */
+		flpSessionPingUrl: null,
 
 		///////////////////////////////////////////////////////////////////
 		//  PINGPONG
@@ -59,10 +62,14 @@ sap.ui.define([
 		/**
 		 * Init the pingpong session check
 		 *
+		 * @param {String} sFLPSessionPingUrl, url used to determinate if the session is alive
 		 * @param {int} iPingTimeoutMS, how many times do you want to check if the session is expired?
 		 * @public
 		 */
-		init: function(iPingTimeoutMS) {
+		init: function(sFLPSessionPingUrl, iPingTimeoutMS) {
+			var that = this;
+			
+			this.flpSessionPingUrl = sFLPSessionPingUrl;
 			if( iPingTimeoutMS ) {
 				this.pingPongTimeout = iPingTimeoutMS;
 			}
@@ -73,7 +80,7 @@ sap.ui.define([
 			}
 			this.pingPongTimer = setInterval(function(){ 
 				$.ajax({
-		            url: "PATH/TO/PING.xsjs",
+		            url: that.flpSessionPingUrl,
 		            type: 'GET',
 		            dataType: 'json',
 		            contentType: 'application/json',
